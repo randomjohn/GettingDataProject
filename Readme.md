@@ -40,3 +40,35 @@ Readme.md | This file
 run_analysis.R | R file that accomplishes the objectives set forth in the assignment
 data/project.zip | The data, already downloaded from the url above on 6/8/2014
 doc/UCI Machine Learning Repository_ Human Activity Recognition Using Smartphones Data Set | description of the data
+
+Description of the solution
+----------------------------------------------
+
+To accomplish the objectives of the assignment, the R file does the following:
+
+* Downloading/extracting data
+  * Assume the project data file has been downloaded to data/project.zip
+  * If the UCI HAR Dataset directory does not yet exist, unzip data/project.zip
+* Reading data
+  * Read the following files into data.frames: data/UCI HAR Dataset/train/subject_train.txt, data/UCI HAR Dataset/train/X_train.txt, data/UCI HAR Dataset/train/y_train.txt
+  * Read the following files into data.frames: data/UCI HAR Dataset/test/subject_train.txt, data/UCI HAR Dataset/test/X_train.txt, data/UCI HAR Dataset/test/y_train.txt
+  * Read the data/UCI HAR Dataset/features.txt as if it were a dataset, to be able to manipulate labels in a semi-automated fashion
+* Manipulating labels
+  * Finding out which labels are means or standard deviations by looking for `mean(` and `std(` in the label names
+  * Removing parens and converting dashes to periods to prettify the R table
+  * Reading in the activity_labels.txt
+  * Merging with Y_train, not sorting
+  * Dropping the original code
+* Manipulating data
+  * Subsetting the X_train set on the labels discovered above
+  * `cbind`ing the three datasets, along with a column that says "Train" to keep track of source during concatenation
+  * Naming the variables using "subject",labels found above,"activity"
+* Repeat the above manipulations for test data, labeling the records as "Test"
+* Using the `plyr` package, create a new dataset giving the average of each variable by subject and activity within subject
+
+Acknowledgments
+----------------------------------------------
+
+The data were obtained using the following source:
+
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
