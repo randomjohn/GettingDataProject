@@ -79,10 +79,19 @@ names(test) <- c("Subject",feat.lab.pretty,"activity","Dataset")
 activity <- rbind(train,test)
 
 
+# final renaming - t to time and f to freq --------------------------------
+
+names(activity) <- sub("^t(.+)$","time\\1",names(activity))
+names(activity) <- sub("^f(.+)$","freq\\1",names(activity))
+
+if (!file.exists("outdata")) dir.create("outdata")
+write.table(activity,"outdata/activity.txt",row.names=F)
+
 # create new dataset of average of subject and activity within sub --------
 
 library(plyr)
 activity.2 <- activity[,-ncol(activity)]
 nc <- ncol(activity.2)-1
 activity.mean <- ddply(activity.2,.(Subject,activity),function(x) colMeans(x[,1:nc]))
-                    
+
+write.table(activity.mean,"outdata/activity_mean.txt",row.names=F)
